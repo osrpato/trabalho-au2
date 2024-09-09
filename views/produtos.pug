@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1.content-head-ribbon.content-head Produtos
+
+  .container-card
+    if Array.isArray(produtos) && produtos.length > 0
+      each produto in produtos
+        .card
+          h2= produto.nome
+          p= produto.descricao
+          p Preço: R$ #{produto.preco.toFixed(2)}
+
+          // Verificação condicional para exibir os botões de editar e remover
+          if usuarioLogado
+            a.pure-button.pure-button-primary(href=`/editar-produto/${produto.id}`) Editar
+            form(action=`/remover-produto/${produto.id}`, method='post', style='display:inline;')
+              button.pure-button.pure-button-primary(type="submit") Remover
+    else
+      p Não há produtos cadastrados.
